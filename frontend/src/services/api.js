@@ -16,40 +16,59 @@ api.interceptors.request.use(async (config) => {
 });
 
 // Complaints
-export const complaintsApi = {
+export const complaintsAPI = {
   list: (params) => api.get('/complaints', { params }),
-  get: (id) => api.get(`/complaints/${id}`),
+  getById: (id) => api.get(`/complaints/${id}`),
   create: (data) => api.post('/complaints', data),
   update: (id, data) => api.put(`/complaints/${id}`, data),
-  update8D: (id, data) => api.put(`/complaints/${id}/8d`, data),
-  addAction: (id, data) => api.post(`/complaints/${id}/actions`, data),
-  updateAction: (id, actionId, data) => api.put(`/complaints/${id}/actions/${actionId}`, data),
+  delete: (id) => api.delete(`/complaints/${id}`),
+};
+
+// 8D Reports
+export const eightDAPI = {
+  getByComplaint: (complaintId) => api.get(`/8d/complaint/${complaintId}`),
+  create: (data) => api.post('/8d', data),
+  update: (id, data) => api.put(`/8d/${id}`, data),
+};
+
+// Corrective Actions
+export const correctiveActionsAPI = {
+  getByComplaint: (complaintId) => api.get(`/corrective-actions/complaint/${complaintId}`),
+  create: (data) => api.post('/corrective-actions', data),
+  update: (id, data) => api.put(`/corrective-actions/${id}`, data),
+  delete: (id) => api.delete(`/corrective-actions/${id}`),
 };
 
 // Dashboard
-export const dashboardApi = {
+export const dashboardAPI = {
   summary: () => api.get('/dashboard/summary'),
   trends: (months) => api.get('/dashboard/trends', { params: { months } }),
   topIssues: () => api.get('/dashboard/top-issues'),
   actionsDue: () => api.get('/dashboard/actions-due'),
+  byType: () => api.get('/dashboard/by-type'),
+  bySeverity: () => api.get('/dashboard/by-severity'),
 };
 
 // Users
-export const usersApi = {
+export const usersAPI = {
   me: () => api.get('/users/me'),
-  list: () => api.get('/users'),
+  getAll: () => api.get('/users'),
   updateRole: (id, role) => api.put(`/users/${id}/role`, { role }),
 };
 
-// Attachments
-export const attachmentsApi = {
-  upload: (complaintId, file) => {
-    const form = new FormData();
-    form.append('file', file);
-    return api.post(`/attachments/${complaintId}`, form);
-  },
-  download: (complaintId, attachmentId) => api.get(`/attachments/${complaintId}/${attachmentId}/download`),
+// Storage / Attachments
+export const storageAPI = {
+  upload: (complaintId, formData) => api.post(`/attachments/${complaintId}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
+  list: (complaintId) => api.get(`/attachments/${complaintId}`),
   delete: (complaintId, attachmentId) => api.delete(`/attachments/${complaintId}/${attachmentId}`),
 };
+
+// Legacy aliases for backward compatibility
+export const complaintsApi = complaintsAPI;
+export const dashboardApi = dashboardAPI;
+export const usersApi = usersAPI;
+export const attachmentsApi = storageAPI;
 
 export default api;
