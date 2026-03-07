@@ -6,8 +6,8 @@
       {
         "source": "/api/**",
         "run": {
-          "serviceId": "complaint-backend",
-          "region": "northamerica-northeast2"
+                    "serviceId": "complaint-api"
+                    "region": "us-central1"
         }
       },
       {
