@@ -6,7 +6,7 @@
       {
         "source": "/api/**",
         "run": {
-                    "serviceId": "complaint-api"
+                    "serviceId": "complaint-api",
                     "region": "us-central1"
         }
       },
