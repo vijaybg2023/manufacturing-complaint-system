@@ -9,6 +9,7 @@ import ComplaintsList from './pages/ComplaintsList';
 import ComplaintForm from './pages/ComplaintForm';
 import ComplaintDetail from './pages/ComplaintDetail';
 import EightDForm from './pages/EightDForm';
+import AIAssistant from './pages/AIAssistant';
 import Layout from './components/Layout';
 
 function PrivateRoute({ children }) {
@@ -55,6 +56,13 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <EightDForm />
+              </Layout>
+            </PrivateRoute>
+          } />
+          <Route path="/ai-assistant" element={
+            <PrivateRoute>
+              <Layout>
+                <AIAssistant />
               </Layout>
             </PrivateRoute>
           } />
