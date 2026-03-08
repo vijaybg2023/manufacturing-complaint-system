@@ -22,6 +22,7 @@ export default function Layout({ children }) {
     { path: '/', label: 'Dashboard', icon: 'grid' },
     { path: '/complaints', label: 'Complaints', icon: 'list' },
     { path: '/complaints/new', label: 'New Complaint', icon: 'plus' },
+        { path: '/ai-assistant', label: 'AI Assistant', icon: 'robot' },
   ];
 
   return (
