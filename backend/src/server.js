@@ -9,6 +9,7 @@ const complaintsRouter = require('./routes/complaints');
 const usersRouter = require('./routes/users');
 const attachmentsRouter = require('./routes/attachments');
 const dashboardRouter = require('./routes/dashboard');
+const aiRouter = require('./routes/ai');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -27,6 +28,7 @@ app.use('/api/complaints', complaintsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/attachments', attachmentsRouter);
 app.use('/api/dashboard', dashboardRouter);
+app.use('/api/ai', aiRouter);
 
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
@@ -34,15 +36,12 @@ app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+  res.status(500).json({ error: 'Internal server error', message: err.message });
 });
 
-// Start server
-async function start() {
-  await testConnection();
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-}
-
-start().catch(console.error);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  testConnection();
+});
 
 module.exports = app;
